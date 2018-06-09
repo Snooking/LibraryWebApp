@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Data.Entity;
 using System.Web.Mvc;
+using System.Threading.Tasks;
 
 namespace LibraryWebApp.Controllers
 {
@@ -8,35 +9,36 @@ namespace LibraryWebApp.Controllers
     {
         private ApplicationDbContext Db = new ApplicationDbContext();
 
-        private BooksDataModel FindBookViaId(int? id)
+        private async Task<BooksDataModel> FindBookViaId(int? id)
         {
             if (id == null) return Db.Books.First();
-            var book = (from b in Db.Books
-                        where b.Id == id
-                        select b)
-                       .First();
-                       
+
+            var book = await Db.Books
+                    .Include(b => b.Author)
+                    .Include(b => b.Series)
+                    .SingleOrDefaultAsync(b => b.Id == id);
+
             return book;
         }
 
         public ActionResult Index()
         {
-            return View(Db.Books.Include(a=>a.Author).Include(a=>a.Series).ToList());
+            return View(Db.Books.Include(a => a.Author).Include(a => a.Series).ToList());
         }
 
-        public ActionResult Edit(int? id)
+        public async Task<ActionResult> Edit(int? id)
         {
-            return View(FindBookViaId(id));
+            return View(await FindBookViaId(id));
         }
 
-        public ActionResult Details(int? id)
+        public async Task<ActionResult> Details(int? id)
         {
-            return View(FindBookViaId(id));
+            return View(await FindBookViaId(id));
         }
 
-        public ActionResult Delete(int? id)
+        public async Task<ActionResult> Delete(int? id)
         {
-            return View(FindBookViaId(id));
+            return View(await FindBookViaId(id));
         }
 
         public ActionResult Create()
