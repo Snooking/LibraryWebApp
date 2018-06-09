@@ -1,27 +1,42 @@
-﻿<table>
+﻿@model IEnumerable<LibraryWebApp.BooksDataModel>
+
+@{
+    ViewBag.Title = "Books";
+}
+
+<h2>Books</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create", "Books", new { area = "" })
+</p>
+<table>
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Id)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
+        <th>Title</th>
+        <th>Author's name</th>
+        <th>Author's surname</th>
+        <th>Series</th>
     </tr>
 
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-            </td>
-        </tr>
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Author.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Author.Surname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Series.Name)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", "Books", new { area = "" }, new { id = item.Id }) |
+            @Html.ActionLink("Details", "Details", "Books", new { area = "" }, new { id = item.Id }) |
+            @Html.ActionLink("Delete", "Delete", "Books", new { area = "" }, new { id = item.Id })
+        </td>
+    </tr>
     }
 </table>
