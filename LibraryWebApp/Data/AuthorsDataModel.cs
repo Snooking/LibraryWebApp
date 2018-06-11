@@ -5,10 +5,13 @@ namespace LibraryWebApp
 {
     public class AuthorsDataModel
     {
-        [MaxLength(256)]
+        [Key]
+        public int Id { get; set; }
+
+        [Required ,MaxLength(256)]
         public string Name { get; set; }
 
-        [MaxLength(256)]
+        [Required, MaxLength(256)]
         public string Surname { get; set; }
 
         public List<BooksDataModel> Books { get; set; }

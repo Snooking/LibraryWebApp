@@ -12,21 +12,5 @@ namespace LibraryWebApp
         {
 
         }
-
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-
-            PrepareAuthorsKey(modelBuilder);
-        }
-
-        private static void PrepareAuthorsKey(DbModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<AuthorsDataModel>().HasKey(author => new
-            {
-                author.Name,
-                author.Surname
-            });
-        }
     }
 }

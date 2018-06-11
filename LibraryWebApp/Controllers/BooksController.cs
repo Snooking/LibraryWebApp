@@ -41,8 +41,29 @@ namespace LibraryWebApp.Controllers
             return View(await FindBookViaId(id));
         }
 
+
         public ActionResult Create()
         {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Create(BooksDataModel book)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    Db.Books.Add(book);
+                    await Db.SaveChangesAsync();
+                    return RedirectToAction("Index");
+                }
+            }
+            catch
+            {
+                return View();
+            }
             return View();
         }
     }

@@ -1,0 +1,34 @@
+﻿@model IEnumerable<LibraryWebApp.AuthorsDataModel>
+
+@{
+    ViewBag.Title = "Authors";
+}
+
+<h2>Books</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create", "Authors", null, null)
+</p>
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Surname</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Surname)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", "Authors", new { name = item.Name, surname = item.Surname }, null) |
+            @Html.ActionLink("Details", "Details", "Authors", new { name = item.Name, surname = item.Surname }, null) |
+            @Html.ActionLink("Delete", "Delete", "Authors", new { name = item.Name, surname = item.Surname }, null)
+        </td>
+    </tr>
+    }
+</table>
